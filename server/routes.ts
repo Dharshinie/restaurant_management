@@ -124,11 +124,11 @@ async function seedDatabase() {
   if (tables.length > 0) return; // Already seeded
 
   await db.insert(schema.tables).values([
-    { number: 1, name: "Table 1", capacity: 4 },
-    { number: 2, name: "Table 2", capacity: 2 },
-    { number: 3, name: "Table 3", capacity: 6 },
-    { number: 4, name: "Table 4", capacity: 4 },
-    { number: 5, name: "Table 5", capacity: 8 },
+    { number: 1, name: "Table 1" },
+    { number: 2, name: "Table 2" },
+    { number: 3, name: "Table 3" },
+    { number: 4, name: "Table 4" },
+    { number: 5, name: "Table 5" },
   ]);
 
   const items = await db.insert(schema.menuItems).values([
