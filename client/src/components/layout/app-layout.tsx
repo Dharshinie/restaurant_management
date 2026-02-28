@@ -1,21 +1,36 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { 
   LayoutDashboard, 
   UtensilsCrossed, 
   ListOrdered,
   Settings,
-  ChefHat
+  ChefHat,
+  ShieldCheck
 } from "lucide-react";
 import { useWebSocket } from "@/hooks/use-websocket";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { isConnected } = useWebSocket();
+  const [role, setRole] = useState<"staff" | "admin">("staff");
+
+  useEffect(() => {
+    const savedRole = window.localStorage.getItem("culina_user_role");
+    if (savedRole === "admin" || savedRole === "staff") {
+      setRole(savedRole);
+      return;
+    }
+    window.localStorage.setItem("culina_user_role", "staff");
+  }, []);
 
   const navItems = [
     { name: "POS Terminal", path: "/pos", icon: <LayoutDashboard className="w-5 h-5" /> },
     { name: "Kitchen Display", path: "/kds", icon: <ChefHat className="w-5 h-5" /> },
     { name: "Order History", path: "/orders", icon: <ListOrdered className="w-5 h-5" /> },
+    ...(role === "admin"
+      ? [{ name: "Admin Dashboard", path: "/admin", icon: <ShieldCheck className="w-5 h-5" /> }]
+      : []),
   ];
 
   return (
@@ -56,6 +71,39 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         <div className="p-4 border-t border-border">
+          <div className="mb-4">
+            <p className="text-[11px] uppercase tracking-wider text-muted-foreground hidden lg:block mb-2 px-2">
+              Access Role
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                className={`px-2 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  role === "staff"
+                    ? "bg-primary/10 text-primary border-primary/30"
+                    : "text-muted-foreground border-border hover:bg-white/5"
+                }`}
+                onClick={() => {
+                  setRole("staff");
+                  window.localStorage.setItem("culina_user_role", "staff");
+                }}
+              >
+                Staff
+              </button>
+              <button
+                className={`px-2 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  role === "admin"
+                    ? "bg-primary/10 text-primary border-primary/30"
+                    : "text-muted-foreground border-border hover:bg-white/5"
+                }`}
+                onClick={() => {
+                  setRole("admin");
+                  window.localStorage.setItem("culina_user_role", "admin");
+                }}
+              >
+                Admin
+              </button>
+            </div>
+          </div>
           <div className="flex items-center justify-center lg:justify-start lg:px-2 mb-4">
             <div className={`w-3 h-3 rounded-full shadow-lg ${isConnected ? 'bg-green-500 shadow-green-500/50' : 'bg-red-500 shadow-red-500/50'} animate-pulse`} />
             <span className="ml-2 text-xs font-medium text-muted-foreground hidden lg:block">

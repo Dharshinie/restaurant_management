@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { 
   insertTableSchema, insertMenuItemSchema, insertMenuVariantSchema, 
-  insertMenuModifierSchema, insertOrderSchema, insertOrderItemSchema,
-  tables, menuItems, menuVariants, menuModifiers, orders, orderItems 
+  insertMenuModifierSchema, insertOrderSchema, insertOrderItemSchema, insertIngredientSchema,
+  tables, menuItems, menuVariants, menuModifiers, orders, orderItems, ingredients, recipeIngredients, purchaseOrders
 } from './schema';
 
 export const errorSchemas = {
@@ -33,6 +33,30 @@ export const api = {
       method: 'GET' as const,
       path: '/api/menu' as const,
       responses: { 200: z.array(z.custom<any>()) }, // Return MenuItemWithDetails
+    },
+    create: {
+      method: 'POST' as const,
+      path: '/api/menu' as const,
+      input: insertMenuItemSchema,
+      responses: { 201: z.custom<typeof menuItems.$inferSelect>(), 400: errorSchemas.validation },
+    },
+    update: {
+      method: 'PATCH' as const,
+      path: '/api/menu/:id' as const,
+      input: insertMenuItemSchema.partial(),
+      responses: { 200: z.custom<typeof menuItems.$inferSelect>(), 404: errorSchemas.notFound },
+    },
+    remove: {
+      method: 'DELETE' as const,
+      path: '/api/menu/:id' as const,
+      responses: { 204: z.void(), 404: errorSchemas.notFound },
+    },
+  },
+  analytics: {
+    summary: {
+      method: 'GET' as const,
+      path: '/api/analytics/summary' as const,
+      responses: { 200: z.custom<any>() },
     },
   },
   orders: {
@@ -84,6 +108,56 @@ export const api = {
       input: z.object({ status: z.string() }), // 'pending', 'preparing', 'ready', 'served'
       responses: { 200: z.custom<any>(), 404: errorSchemas.notFound }, // Return OrderItemWithDetails
     }
+  },
+  inventory: {
+    listIngredients: {
+      method: 'GET' as const,
+      path: '/api/inventory/ingredients' as const,
+      responses: { 200: z.array(z.custom<typeof ingredients.$inferSelect>()) },
+    },
+    createIngredient: {
+      method: 'POST' as const,
+      path: '/api/inventory/ingredients' as const,
+      input: insertIngredientSchema,
+      responses: { 201: z.custom<typeof ingredients.$inferSelect>(), 400: errorSchemas.validation },
+    },
+    updateIngredient: {
+      method: 'PATCH' as const,
+      path: '/api/inventory/ingredients/:id' as const,
+      input: insertIngredientSchema.partial(),
+      responses: { 200: z.custom<typeof ingredients.$inferSelect>(), 404: errorSchemas.notFound },
+    },
+  },
+  recipes: {
+    listByMenuItem: {
+      method: 'GET' as const,
+      path: '/api/recipes/menu-item/:menuItemId' as const,
+      responses: { 200: z.array(z.custom<typeof recipeIngredients.$inferSelect>()) },
+    },
+    setForMenuItem: {
+      method: 'PUT' as const,
+      path: '/api/recipes/menu-item/:menuItemId' as const,
+      input: z.object({
+        ingredients: z.array(z.object({
+          ingredientId: z.number(),
+          quantityRequired: z.number().int().positive(),
+        })).default([]),
+      }),
+      responses: { 200: z.array(z.custom<typeof recipeIngredients.$inferSelect>()), 400: errorSchemas.validation },
+    },
+  },
+  purchaseOrders: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/purchase-orders' as const,
+      input: z.object({ status: z.string().optional() }).optional(),
+      responses: { 200: z.array(z.custom<typeof purchaseOrders.$inferSelect>()) },
+    },
+    generateLowStock: {
+      method: 'POST' as const,
+      path: '/api/purchase-orders/generate-low-stock' as const,
+      responses: { 200: z.array(z.custom<typeof purchaseOrders.$inferSelect>()) },
+    },
   }
 };
 

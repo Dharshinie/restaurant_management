@@ -6,7 +6,8 @@ import type {
   MenuItemWithDetails, 
   OrderWithItems, 
   OrderItemWithDetails,
-  CreateOrderRequest
+  AnalyticsSummary,
+  InsertMenuItem
 } from "@shared/schema";
 
 // --- TABLES ---
@@ -53,6 +54,97 @@ export function useMenu() {
       const res = await fetch(api.menu.list.path);
       if (!res.ok) throw new Error("Failed to fetch menu");
       return (await res.json()) as MenuItemWithDetails[];
+    },
+  });
+}
+
+export function useCreateMenuItem() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async (data: InsertMenuItem) => {
+      const res = await fetch(api.menu.create.path, {
+        method: api.menu.create.method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Failed to create menu item");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [api.menu.list.path] });
+      queryClient.invalidateQueries({ queryKey: [api.analytics.summary.path] });
+      toast({ title: "Success", description: "Menu item created" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+}
+
+export function useUpdateMenuItem() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: Partial<InsertMenuItem>;
+    }) => {
+      const url = buildUrl(api.menu.update.path, { id });
+      const res = await fetch(url, {
+        method: api.menu.update.method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Failed to update menu item");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [api.menu.list.path] });
+      toast({ title: "Success", description: "Menu item updated" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+}
+
+export function useDeleteMenuItem() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async (id: number) => {
+      const url = buildUrl(api.menu.remove.path, { id });
+      const res = await fetch(url, {
+        method: api.menu.remove.method,
+      });
+      if (!res.ok) throw new Error("Failed to delete menu item");
+      return true;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [api.menu.list.path] });
+      queryClient.invalidateQueries({ queryKey: [api.analytics.summary.path] });
+      toast({ title: "Success", description: "Menu item deleted" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+}
+
+export function useAnalyticsSummary() {
+  return useQuery({
+    queryKey: [api.analytics.summary.path],
+    queryFn: async () => {
+      const res = await fetch(api.analytics.summary.path);
+      if (!res.ok) throw new Error("Failed to fetch analytics");
+      return (await res.json()) as AnalyticsSummary;
     },
   });
 }
