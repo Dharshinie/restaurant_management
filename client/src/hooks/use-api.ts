@@ -10,6 +10,16 @@ import type {
   InsertMenuItem
 } from "@shared/schema";
 
+async function getErrorMessage(res: Response, fallback: string): Promise<string> {
+  try {
+    const payload = (await res.json()) as { message?: string };
+    if (payload?.message) return payload.message;
+  } catch {
+    // Ignore JSON parse errors and use fallback message.
+  }
+  return fallback;
+}
+
 // --- TABLES ---
 export function useTables() {
   return useQuery({
@@ -54,7 +64,7 @@ export function useMenu() {
     refetchOnMount: "always",
     queryFn: async () => {
       const res = await fetch(api.menu.list.path);
-      if (!res.ok) throw new Error("Failed to fetch menu");
+      if (!res.ok) throw new Error(await getErrorMessage(res, "Failed to fetch menu"));
       return (await res.json()) as MenuItemWithDetails[];
     },
   });
@@ -71,7 +81,7 @@ export function useCreateMenuItem() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Failed to create menu item");
+      if (!res.ok) throw new Error(await getErrorMessage(res, "Failed to create menu item"));
       return (await res.json()) as MenuItemWithDetails;
     },
     onSuccess: (createdItem) => {
@@ -107,7 +117,7 @@ export function useUpdateMenuItem() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Failed to update menu item");
+      if (!res.ok) throw new Error(await getErrorMessage(res, "Failed to update menu item"));
       return (await res.json()) as MenuItemWithDetails;
     },
     onSuccess: (updatedItem) => {

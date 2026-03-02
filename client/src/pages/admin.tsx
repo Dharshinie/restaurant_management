@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useLocation } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 type FormState = {
   name: string;
@@ -39,10 +40,11 @@ const defaultForm: FormState = {
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
   const { data: analytics, isLoading: analyticsLoading } = useAnalyticsSummary();
-  const { data: menu, isLoading: menuLoading } = useMenu();
+  const { data: menu, isLoading: menuLoading, isError: menuError, error: menuErrorDetails } = useMenu();
   const createMenuItem = useCreateMenuItem();
   const updateMenuItem = useUpdateMenuItem();
   const deleteMenuItem = useDeleteMenuItem();
+  const { toast } = useToast();
 
   const [form, setForm] = useState<FormState>(defaultForm);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -61,12 +63,27 @@ export default function AdminDashboard() {
   const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
   const submitForm = () => {
+    const trimmedName = form.name.trim();
+    const trimmedCategory = form.category.trim();
     const cents = Math.round(Number(form.basePrice) * 100);
-    if (!form.name || !form.category || Number.isNaN(cents)) return;
+
+    if (!trimmedName || !trimmedCategory) {
+      toast({ title: "Validation error", description: "Name and category are required.", variant: "destructive" });
+      return;
+    }
+
+    if (!Number.isFinite(cents) || cents <= 0) {
+      toast({
+        title: "Validation error",
+        description: "Price must be a number greater than 0 (e.g. 12.99).",
+        variant: "destructive",
+      });
+      return;
+    }
 
     const payload = {
-      name: form.name,
-      category: form.category,
+      name: trimmedName,
+      category: trimmedCategory,
       description: form.description || null,
       basePrice: cents,
     };
@@ -192,6 +209,14 @@ export default function AdminDashboard() {
                         <TableRow>
                           <TableCell colSpan={5} className="text-center h-20 text-muted-foreground">
                             Loading menu...
+                          </TableCell>
+                        </TableRow>
+                      ) : menuError ? (
+                        <TableRow>
+                          <TableCell colSpan={5} className="text-center h-20 text-destructive">
+                            {menuErrorDetails instanceof Error
+                              ? menuErrorDetails.message
+                              : "Failed to load menu items."}
                           </TableCell>
                         </TableRow>
                       ) : menu?.length === 0 ? (
