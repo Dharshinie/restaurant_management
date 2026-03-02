@@ -9,22 +9,22 @@ export default function POS() {
 
   return (
     <AppLayout>
-      <div className="flex h-full w-full relative z-10">
+      <div className="flex h-full w-full relative z-10 flex-col xl:flex-row">
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col h-full bg-background overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col h-full bg-background overflow-hidden">
           
           {/* Top Mobile/Tablet Tab Switcher */}
-          <div className="flex p-4 border-b border-border bg-card/50 backdrop-blur-md shrink-0">
-            <div className="bg-background rounded-xl p-1 flex border border-border/50">
+          <div className="flex p-3 sm:p-4 border-b border-border bg-card/50 backdrop-blur-md shrink-0">
+            <div className="bg-background rounded-xl p-1 flex border border-border/50 w-full sm:w-auto">
               <button
                 onClick={() => setActiveTab('tables')}
-                className={`px-6 py-2 rounded-lg font-medium transition-all ${activeTab === 'tables' ? 'bg-primary text-white shadow-md' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base font-medium transition-all ${activeTab === 'tables' ? 'bg-primary text-white shadow-md' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 Floor Plan
               </button>
               <button
                 onClick={() => setActiveTab('menu')}
-                className={`px-6 py-2 rounded-lg font-medium transition-all ${activeTab === 'menu' ? 'bg-primary text-white shadow-md' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base font-medium transition-all ${activeTab === 'menu' ? 'bg-primary text-white shadow-md' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 Menu
               </button>

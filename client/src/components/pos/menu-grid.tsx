@@ -69,7 +69,7 @@ export function MenuGrid() {
   return (
     <div className="flex flex-col h-full">
       {/* Category Tabs */}
-      <div className="p-4 border-b border-border bg-background/50 backdrop-blur-sm sticky top-0 z-10">
+      <div className="p-3 sm:p-4 border-b border-border bg-background/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-none">
           {categories.map(cat => (
             <button
@@ -90,8 +90,8 @@ export function MenuGrid() {
       </div>
 
       {/* Grid */}
-      <ScrollArea className="flex-1 p-6">
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+      <ScrollArea className="flex-1 p-3 sm:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {filteredMenu?.map((item) => (
             <button
               key={item.id}
@@ -105,7 +105,7 @@ export function MenuGrid() {
               <span className="text-xs font-bold tracking-wider text-muted-foreground uppercase mb-2">
                 {item.category}
               </span>
-              <h3 className="font-display font-bold text-lg text-foreground mb-1 leading-tight">
+              <h3 className="font-display font-bold text-base sm:text-lg text-foreground mb-1 leading-tight">
                 {item.name}
               </h3>
               <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-1">
@@ -122,7 +122,7 @@ export function MenuGrid() {
 
       {/* Configurator Dialog */}
       <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
-        <DialogContent className="sm:max-w-[500px] bg-card border-border shadow-2xl">
+        <DialogContent className="max-w-[95vw] sm:max-w-[500px] bg-card border-border shadow-2xl">
           <DialogHeader>
             <DialogTitle className="text-2xl font-display">{selectedItem?.name}</DialogTitle>
             <p className="text-muted-foreground text-sm">{selectedItem?.description}</p>
@@ -189,7 +189,7 @@ export function MenuGrid() {
               )}
 
               {/* Notes & Quantity */}
-              <div className="flex space-x-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
                   <h4 className="font-semibold mb-2 text-sm uppercase tracking-wider text-muted-foreground">Special Instructions</h4>
                   <Input 
@@ -199,7 +199,7 @@ export function MenuGrid() {
                     className="bg-background border-border"
                   />
                 </div>
-                <div className="w-32">
+                <div className="w-full sm:w-32">
                   <h4 className="font-semibold mb-2 text-sm uppercase tracking-wider text-muted-foreground">Quantity</h4>
                   <div className="flex items-center h-10 border border-border rounded-md bg-background">
                     <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-3 hover:text-primary">-</button>
@@ -217,7 +217,7 @@ export function MenuGrid() {
               onClick={handleAddToCart}
               className="bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white shadow-lg shadow-primary/25"
             >
-              Add to Order • {formatPrice(
+              Add to Order - {formatPrice(
                 (selectedItem?.basePrice || 0) + 
                 (selectedVariant?.price || 0) + 
                 selectedModifiers.reduce((acc, m) => acc + m.priceAdjustment, 0) * quantity

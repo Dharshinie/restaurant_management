@@ -13,13 +13,13 @@ export default function KDS() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col h-full w-full relative z-10 p-6">
-        <header className="mb-6">
-          <h1 className="text-3xl font-display font-bold text-foreground">Kitchen Display System</h1>
+      <div className="flex flex-col h-full w-full relative z-10 p-3 sm:p-6">
+        <header className="mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Kitchen Display System</h1>
           <p className="text-muted-foreground mt-1">Live order synchronization.</p>
         </header>
 
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 overflow-hidden">
           
           {/* Column: Pending */}
           <div className="flex flex-col bg-card/40 border border-border rounded-2xl overflow-hidden backdrop-blur-sm">

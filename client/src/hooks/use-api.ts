@@ -50,6 +50,8 @@ export function useUpdateTable() {
 export function useMenu() {
   return useQuery({
     queryKey: [api.menu.list.path],
+    staleTime: 0,
+    refetchOnMount: "always",
     queryFn: async () => {
       const res = await fetch(api.menu.list.path);
       if (!res.ok) throw new Error("Failed to fetch menu");
@@ -70,10 +72,14 @@ export function useCreateMenuItem() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error("Failed to create menu item");
-      return res.json();
+      return (await res.json()) as MenuItemWithDetails;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [api.menu.list.path] });
+    onSuccess: (createdItem) => {
+      queryClient.setQueryData<MenuItemWithDetails[]>([api.menu.list.path], (prev) => {
+        const current = prev ?? [];
+        return [...current, { ...createdItem, variants: createdItem.variants ?? [], modifiers: createdItem.modifiers ?? [] }];
+      });
+      queryClient.invalidateQueries({ queryKey: [api.menu.list.path], refetchType: "all" });
       queryClient.invalidateQueries({ queryKey: [api.analytics.summary.path] });
       toast({ title: "Success", description: "Menu item created" });
     },
@@ -102,10 +108,23 @@ export function useUpdateMenuItem() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error("Failed to update menu item");
-      return res.json();
+      return (await res.json()) as MenuItemWithDetails;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [api.menu.list.path] });
+    onSuccess: (updatedItem) => {
+      queryClient.setQueryData<MenuItemWithDetails[]>([api.menu.list.path], (prev) => {
+        if (!prev) return prev;
+        return prev.map((item) =>
+          item.id === updatedItem.id
+            ? {
+                ...item,
+                ...updatedItem,
+                variants: item.variants,
+                modifiers: item.modifiers,
+              }
+            : item,
+        );
+      });
+      queryClient.invalidateQueries({ queryKey: [api.menu.list.path], refetchType: "all" });
       toast({ title: "Success", description: "Menu item updated" });
     },
     onError: (error) => {
@@ -125,10 +144,13 @@ export function useDeleteMenuItem() {
         method: api.menu.remove.method,
       });
       if (!res.ok) throw new Error("Failed to delete menu item");
-      return true;
+      return id;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [api.menu.list.path] });
+    onSuccess: (id) => {
+      queryClient.setQueryData<MenuItemWithDetails[]>([api.menu.list.path], (prev) =>
+        prev ? prev.filter((item) => item.id !== id) : prev,
+      );
+      queryClient.invalidateQueries({ queryKey: [api.menu.list.path], refetchType: "all" });
       queryClient.invalidateQueries({ queryKey: [api.analytics.summary.path] });
       toast({ title: "Success", description: "Menu item deleted" });
     },

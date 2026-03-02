@@ -9,9 +9,9 @@ export function TableMap({ onTableSelect }: { onTableSelect: () => void }) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 p-3 sm:p-6">
         {[...Array(10)].map((_, i) => (
-          <Skeleton key={i} className="h-32 rounded-2xl bg-card border border-border" />
+          <Skeleton key={i} className="h-28 sm:h-32 rounded-2xl bg-card border border-border" />
         ))}
       </div>
     );
@@ -24,15 +24,15 @@ export function TableMap({ onTableSelect }: { onTableSelect: () => void }) {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-display font-bold mb-6 text-foreground flex items-center">
+    <div className="p-3 sm:p-6">
+      <h2 className="text-xl sm:text-2xl font-display font-bold mb-4 sm:mb-6 text-foreground flex items-center">
         Floor Plan
         <span className="ml-3 px-2 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-mono text-muted-foreground">
           {tables?.length || 0} Tables
         </span>
       </h2>
       
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
         {tables?.map((table) => {
           let statusColor = "border-green-500/30 bg-green-500/10 text-green-400";
           let StatusIcon = CheckCircle2;
@@ -52,7 +52,7 @@ export function TableMap({ onTableSelect }: { onTableSelect: () => void }) {
               key={table.id}
               onClick={() => handleSelect(table.id)}
               className={`
-                relative p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center h-32
+                relative p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center h-28 sm:h-32
                 hover-elevate focus:outline-none focus:ring-4 focus:ring-primary/20
                 ${isSelected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 z-10' : ''}
                 ${statusColor}

@@ -39,15 +39,16 @@ export default function Orders() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col h-full w-full relative z-10 p-6">
-        <header className="mb-6">
-          <h1 className="text-3xl font-display font-bold text-foreground">Order History</h1>
+      <div className="flex flex-col h-full w-full relative z-10 p-3 sm:p-6">
+        <header className="mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Order History</h1>
           <p className="text-muted-foreground mt-1">Review past and active orders.</p>
         </header>
 
         <div className="flex-1 bg-card border border-border rounded-2xl overflow-hidden shadow-xl">
           <ScrollArea className="h-full">
-            <Table>
+            <div className="min-w-[760px]">
+              <Table>
               <TableHeader className="bg-background/50 sticky top-0 backdrop-blur-md z-10">
                 <TableRow className="border-border hover:bg-transparent">
                   <TableHead className="w-[100px]">Order ID</TableHead>
@@ -115,7 +116,8 @@ export default function Orders() {
                   ))
                 )}
               </TableBody>
-            </Table>
+              </Table>
+            </div>
           </ScrollArea>
         </div>
       </div>

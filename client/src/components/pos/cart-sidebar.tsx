@@ -42,31 +42,31 @@ export function CartSidebar() {
   };
 
   return (
-    <div className="w-full lg:w-96 bg-card border-l border-border flex flex-col h-full shadow-2xl z-20">
+    <div className="w-full xl:w-96 bg-card border-t xl:border-t-0 xl:border-l border-border flex flex-col h-[44vh] xl:h-full shadow-2xl z-20">
       {/* Header */}
-      <div className="p-4 border-b border-border bg-card/80 backdrop-blur-md">
-        <h2 className="text-xl font-display font-bold flex items-center mb-4">
+      <div className="p-3 sm:p-4 border-b border-border bg-card/80 backdrop-blur-md">
+        <h2 className="text-lg sm:text-xl font-display font-bold flex items-center mb-3 sm:mb-4">
           <ShoppingBag className="w-5 h-5 mr-2 text-primary" />
           Current Order
         </h2>
         
         {/* Order Type Toggle */}
-        <div className="flex p-1 bg-background rounded-lg border border-border/50">
+        <div className="flex p-1 bg-background rounded-lg border border-border/50 overflow-x-auto">
           <button 
             onClick={() => setOrderType('dine-in')}
-            className={`flex-1 flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'dine-in' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'dine-in' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <Utensils className="w-4 h-4 mr-2" /> Dine-in
           </button>
           <button 
             onClick={() => setOrderType('takeaway')}
-            className={`flex-1 flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'takeaway' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'takeaway' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <ShoppingBag className="w-4 h-4 mr-2" /> Pickup
           </button>
           <button 
             onClick={() => setOrderType('delivery')}
-            className={`flex-1 flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'delivery' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'delivery' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <Car className="w-4 h-4 mr-2" /> Delivery
           </button>
@@ -83,7 +83,7 @@ export function CartSidebar() {
       </div>
 
       {/* Cart Items */}
-      <ScrollArea className="flex-1 p-4">
+      <ScrollArea className="flex-1 p-3 sm:p-4">
         {items.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-muted-foreground pt-20 opacity-50">
             <ShoppingBag className="w-16 h-16 mb-4" />
@@ -141,7 +141,7 @@ export function CartSidebar() {
       </ScrollArea>
 
       {/* Footer / Checkout */}
-      <div className="p-4 border-t border-border bg-card">
+      <div className="p-3 sm:p-4 border-t border-border bg-card">
         <div className="space-y-2 mb-4">
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Subtotal</span>
@@ -160,7 +160,7 @@ export function CartSidebar() {
         <Button 
           onClick={handleCheckout}
           disabled={items.length === 0 || createOrder.isPending || (orderType === 'dine-in' && !tableId)}
-          className="w-full h-14 text-lg font-bold bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 shadow-lg shadow-primary/20 hover-elevate"
+          className="w-full h-12 sm:h-14 text-base sm:text-lg font-bold bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 shadow-lg shadow-primary/20 hover-elevate"
         >
           {createOrder.isPending ? "Sending to Kitchen..." : "Send Order"}
         </Button>

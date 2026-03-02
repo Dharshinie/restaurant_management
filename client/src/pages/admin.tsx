@@ -109,9 +109,9 @@ export default function AdminDashboard() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col h-full w-full relative z-10 p-6 gap-6">
+      <div className="flex flex-col h-full w-full relative z-10 p-3 sm:p-6 gap-4 sm:gap-6">
         <header>
-          <h1 className="text-3xl font-display font-bold text-foreground">Admin Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Admin Dashboard</h1>
           <p className="text-muted-foreground mt-1">
             Analytics visibility and menu management are restricted to the Admin role.
           </p>
@@ -157,7 +157,7 @@ export default function AdminDashboard() {
                   onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
                 />
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Button onClick={submitForm} disabled={createMenuItem.isPending || updateMenuItem.isPending}>
                   {editingId ? "Update Item" : "Add Item"}
                 </Button>
@@ -176,7 +176,8 @@ export default function AdminDashboard() {
 
               <div className="border border-border rounded-xl overflow-hidden">
                 <ScrollArea className="h-[380px]">
-                  <Table>
+                  <div className="min-w-[720px]">
+                    <Table>
                     <TableHeader>
                       <TableRow>
                         <TableHead>Name</TableHead>
@@ -225,7 +226,8 @@ export default function AdminDashboard() {
                         ))
                       )}
                     </TableBody>
-                  </Table>
+                    </Table>
+                  </div>
                 </ScrollArea>
               </div>
             </CardContent>
