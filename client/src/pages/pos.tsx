@@ -76,11 +76,11 @@ export default function POS() {
     <AppLayout>
       <div className="flex h-full w-full relative z-10 flex-col xl:flex-row overflow-hidden">
         {/* Main Content Area */}
-        <div className="flex-1 min-h-0 flex flex-col h-full bg-background overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col h-full overflow-hidden">
           
           {/* Top Mobile/Tablet Tab Switcher */}
-          <div className="flex p-3 sm:p-4 border-b border-border bg-card/50 backdrop-blur-md shrink-0">
-            <div className="bg-background rounded-xl p-1 flex border border-border/50 w-full sm:w-auto">
+          <div className="liquid-glass flex p-3 sm:p-4 border-b border-white/20 shrink-0">
+            <div className="bg-slate-950/45 rounded-xl p-1 flex border border-white/20 w-full sm:w-auto">
               <button
                 onClick={() => {
                   setActiveTab('tables');

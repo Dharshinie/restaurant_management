@@ -42,31 +42,31 @@ export function CartSidebar({ id, className = "" }: { id?: string; className?: s
   };
 
   return (
-    <div id={id} className={`w-full xl:w-96 bg-card border-t xl:border-t-0 xl:border-l border-border flex flex-col h-[44vh] xl:h-full shadow-2xl z-20 ${className}`}>
+    <div id={id} className={`liquid-glass w-full xl:w-96 border-t xl:border-t-0 xl:border-l border-white/20 flex flex-col h-[44vh] xl:h-full shadow-2xl z-20 ${className}`}>
       {/* Header */}
-      <div className="p-3 sm:p-4 border-b border-border bg-card/80 backdrop-blur-md">
+      <div className="p-3 sm:p-4 border-b border-white/20 bg-slate-950/35 backdrop-blur-md">
         <h2 className="text-lg sm:text-xl font-display font-bold flex items-center mb-3 sm:mb-4">
           <ShoppingBag className="w-5 h-5 mr-2 text-primary" />
           Current Order
         </h2>
         
         {/* Order Type Toggle */}
-        <div className="flex p-1 bg-background rounded-lg border border-border/50 overflow-x-auto">
+        <div className="flex p-1 bg-slate-950/45 rounded-lg border border-white/20 overflow-x-auto">
           <button 
             onClick={() => setOrderType('dine-in')}
-            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'dine-in' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'dine-in' ? 'bg-slate-900/70 text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <Utensils className="w-4 h-4 mr-2" /> Dine-in
           </button>
           <button 
             onClick={() => setOrderType('takeaway')}
-            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'takeaway' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'takeaway' ? 'bg-slate-900/70 text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <ShoppingBag className="w-4 h-4 mr-2" /> Pickup
           </button>
           <button 
             onClick={() => setOrderType('delivery')}
-            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'delivery' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex-1 min-w-[96px] flex items-center justify-center py-1.5 text-sm font-medium rounded-md transition-all ${orderType === 'delivery' ? 'bg-slate-900/70 text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <Car className="w-4 h-4 mr-2" /> Delivery
           </button>
@@ -75,7 +75,7 @@ export function CartSidebar({ id, className = "" }: { id?: string; className?: s
         {orderType === 'dine-in' && (
           <div className="mt-3 text-sm bg-primary/10 border border-primary/20 text-primary px-3 py-2 rounded-lg flex items-center justify-between">
             <span>Table Selection</span>
-            <span className="font-bold font-mono bg-background px-2 py-0.5 rounded">
+            <span className="font-bold font-mono bg-slate-950/55 px-2 py-0.5 rounded">
               {selectedTable ? `T${selectedTable.number}` : 'None'}
             </span>
           </div>
@@ -93,7 +93,7 @@ export function CartSidebar({ id, className = "" }: { id?: string; className?: s
         ) : (
           <div className="space-y-4">
             {items.map((item) => (
-              <div key={item.id} className="group relative bg-background rounded-xl p-3 border border-border/50 shadow-sm hover:border-primary/30 transition-colors">
+              <div key={item.id} className="group relative bg-slate-950/45 rounded-xl p-3 border border-white/20 shadow-sm hover:border-primary/40 transition-colors">
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex-1 pr-2">
                     <h4 className="font-bold text-sm leading-tight">{item.menuItem.name}</h4>
@@ -122,9 +122,9 @@ export function CartSidebar({ id, className = "" }: { id?: string; className?: s
                 </div>
                 
                 <div className="flex items-center justify-between mt-3">
-                  <div className="flex items-center bg-card rounded-md border border-border overflow-hidden h-8">
+                  <div className="flex items-center bg-slate-900/70 rounded-md border border-white/20 overflow-hidden h-8">
                     <button onClick={() => updateQuantity(item.id, -1)} className="px-3 hover:bg-white/5 hover:text-primary transition-colors">-</button>
-                    <span className="w-8 text-center text-sm font-bold bg-background py-1">{item.quantity}</span>
+                    <span className="w-8 text-center text-sm font-bold bg-slate-950/60 py-1">{item.quantity}</span>
                     <button onClick={() => updateQuantity(item.id, 1)} className="px-3 hover:bg-white/5 hover:text-primary transition-colors">+</button>
                   </div>
                   <button 
@@ -141,7 +141,7 @@ export function CartSidebar({ id, className = "" }: { id?: string; className?: s
       </ScrollArea>
 
       {/* Footer / Checkout */}
-      <div className="p-3 sm:p-4 border-t border-border bg-card">
+      <div className="p-3 sm:p-4 border-t border-white/20 bg-slate-950/35">
         <div className="space-y-2 mb-4">
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Subtotal</span>

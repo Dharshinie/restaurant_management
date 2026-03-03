@@ -10,13 +10,13 @@
     --font-display: 'Outfit', sans-serif;
     
     /* Dark Mode Professional Palette */
-    --background: 222 47% 7%;
+    --background: 230 44% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 11%;
+    --card: 228 42% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 11%;
+    --popover: 228 42% 10%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 217 91% 60%;
@@ -26,7 +26,7 @@
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 214 24% 78%;
 
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
@@ -34,8 +34,8 @@
     --destructive: 350 89% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --border: 218 31% 25%;
+    --input: 218 31% 25%;
     --ring: 224 76% 48%;
 
     --radius: 0.75rem;
@@ -79,6 +79,62 @@
   }
   .glass-panel {
     @apply bg-card/60 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  .liquid-glass {
+    background: linear-gradient(150deg, rgba(14, 20, 47, 0.82), rgba(10, 14, 36, 0.68));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 20px 56px rgba(6, 7, 27, 0.52),
+      inset 0 1px 0 rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+  }
+  .liquid-glass-gradient {
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(75% 55% at 12% 15%, rgba(255, 141, 39, 0.22), transparent 70%),
+      radial-gradient(70% 56% at 88% 8%, rgba(255, 194, 72, 0.16), transparent 72%),
+      radial-gradient(68% 58% at 50% 42%, rgba(74, 218, 255, 0.18), transparent 70%),
+      radial-gradient(80% 70% at 68% 100%, rgba(46, 76, 232, 0.24), transparent 72%);
+    pointer-events: none;
+  }
+  .liquid-atmosphere {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .liquid-atmosphere::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(85% 60% at 52% 22%, rgba(163, 245, 255, 0.78) 0%, rgba(34, 188, 255, 0.52) 38%, rgba(18, 79, 198, 0.28) 62%, transparent 80%),
+      radial-gradient(90% 72% at 9% 100%, rgba(255, 80, 8, 0.84) 0%, rgba(226, 60, 3, 0.42) 42%, transparent 74%),
+      radial-gradient(92% 80% at 90% 18%, rgba(255, 152, 0, 0.86) 0%, rgba(168, 64, 1, 0.40) 44%, transparent 76%),
+      radial-gradient(95% 95% at 55% 76%, rgba(17, 36, 228, 0.78) 0%, rgba(8, 10, 118, 0.78) 42%, rgba(3, 4, 30, 0.98) 90%),
+      linear-gradient(145deg, #ff7500 0%, #5a0ba5 32%, #0d82d4 52%, #12165d 78%, #040410 100%);
+    filter: saturate(120%);
+  }
+  .liquid-atmosphere::after {
+    content: "";
+    position: absolute;
+    inset: -15%;
+    z-index: -1;
+    background:
+      radial-gradient(36% 26% at 49% 20%, rgba(205, 253, 255, 0.42), transparent 78%),
+      radial-gradient(36% 30% at 73% 34%, rgba(255, 183, 92, 0.20), transparent 80%),
+      radial-gradient(35% 34% at 24% 72%, rgba(255, 100, 16, 0.24), transparent 82%),
+      radial-gradient(72% 60% at 58% 90%, rgba(28, 37, 209, 0.52), transparent 74%);
+    filter: blur(26px);
+    pointer-events: none;
   }
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70;

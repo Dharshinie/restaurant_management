@@ -45,11 +45,11 @@ export default function Orders() {
           <p className="text-muted-foreground mt-1">Review past and active orders.</p>
         </header>
 
-        <div className="flex-1 bg-card border border-border rounded-2xl overflow-hidden shadow-xl">
+        <div className="liquid-glass flex-1 border border-white/20 rounded-2xl overflow-hidden shadow-xl">
           <ScrollArea className="h-full">
             <div className="min-w-[760px]">
               <Table>
-              <TableHeader className="bg-background/50 sticky top-0 backdrop-blur-md z-10">
+              <TableHeader className="bg-slate-950/45 sticky top-0 backdrop-blur-md z-10">
                 <TableRow className="border-border hover:bg-transparent">
                   <TableHead className="w-[100px]">Order ID</TableHead>
                   <TableHead>Date & Time</TableHead>

@@ -158,13 +158,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               <span className={`ml-3 font-medium ${closeOnNavigate ? "block" : "hidden lg:block"}`}>Settings</span>
             </button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[92vw] sm:w-[440px] border-border bg-card">
+          <SheetContent
+            side="right"
+            className="liquid-glass z-[80] w-[92vw] sm:w-[440px] sm:max-w-[440px] border-l border-white/30 bg-slate-950/95 text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.65)]"
+          >
             <SheetHeader>
               <SheetTitle className="font-display">Settings</SheetTitle>
               <SheetDescription>Manage role and sync runtime data.</SheetDescription>
             </SheetHeader>
 
-            <div className="mt-6 space-y-6">
+            <div className="mt-6 space-y-6 rounded-2xl border border-white/20 bg-slate-900/70 p-4">
               <div className="space-y-3">
                 <p className="text-xs uppercase tracking-wider text-muted-foreground">Access Role</p>
                 <div className="grid grid-cols-3 gap-2">
@@ -214,22 +217,22 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="flex h-screen w-full flex-col md:flex-row bg-background overflow-hidden">
+    <div className="liquid-atmosphere flex h-screen w-full flex-col md:flex-row bg-background overflow-hidden">
       {/* Sidebar (Desktop) */}
-      <aside className="hidden md:flex w-20 lg:w-64 bg-card border-r border-border flex-col justify-between transition-all duration-300 shrink-0">
+      <aside className="liquid-glass hidden md:flex w-20 lg:w-64 border-r border-white/20 flex-col justify-between transition-all duration-300 shrink-0">
         <SidebarContent />
       </aside>
 
       {/* Main Content */}
       <main className="flex-1 min-h-0 flex flex-col relative overflow-hidden">
-        <div className="md:hidden h-14 px-3 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between shrink-0">
+        <div className="liquid-glass md:hidden h-14 px-3 border-b border-white/20 flex items-center justify-between shrink-0">
           <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="h-9 w-9">
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[84vw] max-w-[320px] p-0 border-border bg-card">
+            <SheetContent side="left" className="liquid-glass w-[84vw] max-w-[320px] p-0 border-white/20 bg-transparent">
               <div className="h-full flex flex-col justify-between">
                 <SidebarContent closeOnNavigate />
               </div>
@@ -244,7 +247,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Subtle background glow */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-400/20 rounded-full blur-[120px] pointer-events-none" />
         
         {children}
       </main>

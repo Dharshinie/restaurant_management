@@ -22,12 +22,12 @@ export default function KDS() {
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 overflow-hidden">
           
           {/* Column: Pending */}
-          <div className="flex flex-col bg-card/40 border border-border rounded-2xl overflow-hidden backdrop-blur-sm">
-            <div className="p-4 border-b border-border bg-slate-900/80 flex items-center justify-between">
-              <h2 className="font-bold flex items-center text-slate-300">
-                <Flame className="w-5 h-5 mr-2 text-slate-400" /> New Orders
+          <div className="liquid-glass flex flex-col border border-white/20 rounded-2xl overflow-hidden backdrop-blur-sm">
+            <div className="p-4 border-b border-white/20 bg-slate-950/55 flex items-center justify-between">
+              <h2 className="font-bold flex items-center text-slate-100">
+                <Flame className="w-5 h-5 mr-2 text-slate-300" /> New Orders
               </h2>
-              <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-sm font-mono">{pending.length}</span>
+              <span className="bg-slate-800/80 text-slate-100 px-2 py-0.5 rounded text-sm font-mono">{pending.length}</span>
             </div>
             <ScrollArea className="flex-1 p-4">
               {isLoading ? <p className="text-muted-foreground p-4 text-center">Loading...</p> : (
@@ -40,12 +40,12 @@ export default function KDS() {
           </div>
 
           {/* Column: Preparing */}
-          <div className="flex flex-col bg-card/40 border border-border rounded-2xl overflow-hidden backdrop-blur-sm">
-            <div className="p-4 border-b border-border bg-blue-950/40 flex items-center justify-between">
-              <h2 className="font-bold flex items-center text-blue-400">
-                <ChefHat className="w-5 h-5 mr-2 text-blue-500" /> Preparing
+          <div className="liquid-glass flex flex-col border border-white/20 rounded-2xl overflow-hidden backdrop-blur-sm">
+            <div className="p-4 border-b border-white/20 bg-blue-950/35 flex items-center justify-between">
+              <h2 className="font-bold flex items-center text-blue-200">
+                <ChefHat className="w-5 h-5 mr-2 text-blue-300" /> Preparing
               </h2>
-              <span className="bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded text-sm font-mono">{preparing.length}</span>
+              <span className="bg-blue-900/60 text-blue-100 px-2 py-0.5 rounded text-sm font-mono">{preparing.length}</span>
             </div>
             <ScrollArea className="flex-1 p-4">
               <div className="space-y-4">
@@ -56,12 +56,12 @@ export default function KDS() {
           </div>
 
           {/* Column: Ready */}
-          <div className="flex flex-col bg-card/40 border border-border rounded-2xl overflow-hidden backdrop-blur-sm">
-            <div className="p-4 border-b border-border bg-green-950/30 flex items-center justify-between">
-              <h2 className="font-bold flex items-center text-green-400">
-                <CheckCircle className="w-5 h-5 mr-2 text-green-500" /> Ready to Serve
+          <div className="liquid-glass flex flex-col border border-white/20 rounded-2xl overflow-hidden backdrop-blur-sm">
+            <div className="p-4 border-b border-white/20 bg-green-950/30 flex items-center justify-between">
+              <h2 className="font-bold flex items-center text-green-200">
+                <CheckCircle className="w-5 h-5 mr-2 text-green-300" /> Ready to Serve
               </h2>
-              <span className="bg-green-900/50 text-green-300 px-2 py-0.5 rounded text-sm font-mono">{ready.length}</span>
+              <span className="bg-green-900/60 text-green-100 px-2 py-0.5 rounded text-sm font-mono">{ready.length}</span>
             </div>
             <ScrollArea className="flex-1 p-4">
               <div className="space-y-4">
