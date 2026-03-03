@@ -3,7 +3,13 @@ import { useCart } from "@/store/use-cart";
 import { Users, Receipt, CheckCircle2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function TableMap({ onTableSelect }: { onTableSelect: () => void }) {
+export function TableMap({
+  onTableSelect,
+  canSelect = true,
+}: {
+  onTableSelect: () => void;
+  canSelect?: boolean;
+}) {
   const { data: tables, isLoading } = useTables();
   const { tableId: selectedTableId, setTableId, setOrderType } = useCart();
 
@@ -18,6 +24,7 @@ export function TableMap({ onTableSelect }: { onTableSelect: () => void }) {
   }
 
   const handleSelect = (id: number) => {
+    if (!canSelect) return;
     setTableId(id);
     setOrderType('dine-in');
     onTableSelect();
@@ -51,9 +58,11 @@ export function TableMap({ onTableSelect }: { onTableSelect: () => void }) {
             <button
               key={table.id}
               onClick={() => handleSelect(table.id)}
+              disabled={!canSelect}
               className={`
                 relative p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center h-28 sm:h-32
                 hover-elevate focus:outline-none focus:ring-4 focus:ring-primary/20
+                disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
                 ${isSelected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 z-10' : ''}
                 ${statusColor}
               `}

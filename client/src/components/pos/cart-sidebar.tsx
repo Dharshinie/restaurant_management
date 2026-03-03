@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 
-export function CartSidebar() {
+export function CartSidebar({ id, className = "" }: { id?: string; className?: string }) {
   const { 
     items, tableId, orderType, 
     setOrderType, updateQuantity, removeItem, clearCart, getTotal 
@@ -42,7 +42,7 @@ export function CartSidebar() {
   };
 
   return (
-    <div className="w-full xl:w-96 bg-card border-t xl:border-t-0 xl:border-l border-border flex flex-col h-[44vh] xl:h-full shadow-2xl z-20">
+    <div id={id} className={`w-full xl:w-96 bg-card border-t xl:border-t-0 xl:border-l border-border flex flex-col h-[44vh] xl:h-full shadow-2xl z-20 ${className}`}>
       {/* Header */}
       <div className="p-3 sm:p-4 border-b border-border bg-card/80 backdrop-blur-md">
         <h2 className="text-lg sm:text-xl font-display font-bold flex items-center mb-3 sm:mb-4">

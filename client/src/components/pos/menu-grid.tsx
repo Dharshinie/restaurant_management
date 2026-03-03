@@ -14,7 +14,13 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { MenuItemWithDetails, MenuVariant, MenuModifier } from "@shared/schema";
 
-export function MenuGrid() {
+export function MenuGrid({
+  onItemAdded,
+  canSelectItems = true,
+}: {
+  onItemAdded?: () => void;
+  canSelectItems?: boolean;
+}) {
   const { data: menu, isLoading } = useMenu();
   const { addItem } = useCart();
   
@@ -37,6 +43,7 @@ export function MenuGrid() {
   const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
   const openConfigurator = (item: MenuItemWithDetails) => {
+    if (!canSelectItems) return;
     setSelectedItem(item);
     setSelectedVariant(item.variants.length > 0 ? item.variants[0] : null);
     setSelectedModifiers([]);
@@ -56,6 +63,7 @@ export function MenuGrid() {
     });
     
     setSelectedItem(null);
+    onItemAdded?.();
   };
 
   const toggleModifier = (mod: MenuModifier) => {
@@ -96,7 +104,8 @@ export function MenuGrid() {
             <button
               key={item.id}
               onClick={() => openConfigurator(item)}
-              className="group relative flex flex-col text-left bg-card border border-border/50 rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:shadow-black/20 hover:border-primary/50 focus:outline-none"
+              disabled={!canSelectItems}
+              className="group relative flex flex-col text-left bg-card border border-border/50 rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:shadow-black/20 hover:border-primary/50 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:scale-110">
                 <Plus className="w-5 h-5" />
@@ -215,6 +224,7 @@ export function MenuGrid() {
             <Button variant="outline" onClick={() => setSelectedItem(null)}>Cancel</Button>
             <Button 
               onClick={handleAddToCart}
+              disabled={!canSelectItems}
               className="bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white shadow-lg shadow-primary/25"
             >
               Add to Order - {formatPrice(

@@ -126,7 +126,7 @@ export default function AdminDashboard() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col h-full w-full relative z-10 p-3 sm:p-6 gap-4 sm:gap-6">
+      <div className="flex flex-col h-full w-full relative z-10 p-3 sm:p-6 gap-4 sm:gap-6 overflow-y-auto">
         <header>
           <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Admin Dashboard</h1>
           <p className="text-muted-foreground mt-1">
