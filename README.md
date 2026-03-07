@@ -6,7 +6,7 @@ This project is built using a modern full-stack architecture with React, Node.js
 
 <b>🚀 Tech Stack</b>
 
-<b>Frontend<b/>
+<b>Frontend</b>
 
 ->React.js
 
