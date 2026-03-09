@@ -84,6 +84,10 @@ server/
 
 ->Connect the project using Supabase API keys
 
+Deployment Link
+
+https://restaurantmanagement--Edshine.replit.app
+
 <b>📌 Purpose of the Project</b>
 
 The goal of this project is to build a modern full-stack restaurant management system while learning real-world technologies such as React, Node.js, Express, and Supabase.
